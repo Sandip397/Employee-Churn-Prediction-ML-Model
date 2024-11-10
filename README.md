@@ -1,36 +1,53 @@
-# Employee-Churn-Prediction-ML-Model
-RandomForestClassifier_ML_Employee Churn Prediction Model
+# Employee Churn Prediction ML Model
+**RandomForestClassifier_ML_Employee Churn Prediction Model**
 
-The provided code outlines a process for connecting to Google Cloud's BigQuery service from a Colab environment, retrieving data from specific BigQuery tables, converting this data to Pandas dataframes, using PyCaret to build and train a machine learning model, making predictions with this model, and finally, writing results back to BigQuery. Here's a step-by-step explanation and the outcomes expected from each step:
+This project demonstrates a machine learning pipeline to predict employee churn using data from Google Cloud's BigQuery. The process involves connecting to BigQuery, retrieving data, building and training a machine learning model using PyCaret, making predictions, and writing the results back to BigQuery.
 
-Authentication and BigQuery Client Initialization
-•	Libraries Required: google.cloud.bigquery for BigQuery access and google.colab for authentication within a Colab environment.
-•	Authentication: The user is authenticated using auth.authenticate_user(), which is necessary for accessing Google Cloud resources.
-•	Client Initialization: A BigQuery client is initialized with a specific project ID and location. This client is used to interact with BigQuery datasets and 
-    tables.
+## Workflow Overview
 
-Data Retrieval
-•	Dataset and Table References: References to a specific dataset ('employeedata') and two tables within this dataset ('tbl_hr_data' and 'tbl_new_employees') are 
-    created.
-•	Schema Viewing: The schema of the tables is retrieved to understand the structure of the data (e.g., column names, data types).
-•	Data Conversion to Dataframe: The data from both tables is fetched and converted into Pandas dataframes (df and df2) for analysis and modeling.
+1. **Authentication and BigQuery Client Initialization**
+   - **Libraries Required**: `google.cloud.bigquery` for BigQuery access and `google.colab` for authentication within a Colab environment.
+   - **Authentication**: Uses `auth.authenticate_user()` for Google Cloud resource access.
+   - **Client Initialization**: Initializes a BigQuery client with a specified project ID and location to interact with BigQuery datasets and tables.
 
-Building the Model with PyCaret(RandomForestClassifier) 
-•	PyCaret Installation: PyCaret, an automated machine learning library, is installed using pip.
-•	Model Setup: The dataframe df is prepared for modeling with PyCaret, specifying a target variable ('Quit_the_Company'), a session ID, features to ignore, and 
-    categorical features.
-•	Model Training: Various models are compared using compare_models(), and a random forest model ('rf') is created with create_model('rf').
-•	Model Prediction: Predictions are made on the original data (df) and new data (df2), and the results are stored in final_df and new_predictions, respectively.
+2. **Data Retrieval**
+   - **Dataset and Table References**: References are set up for a dataset (`employeedata`) and two tables (`tbl_hr_data` and `tbl_new_employees`) within this dataset.
+   - **Schema Viewing**: Retrieves the schema of the tables to understand data structure (e.g., column names, data types).
+   - **Data Conversion to DataFrame**: Fetches data from both tables and converts them into Pandas dataframes (`df` and `df2`) for analysis and modeling.
 
-Writing Results Back to BigQuery
-•	BigQuery Writeback: The predictions for new employees (new_predictions) are written back to BigQuery into a table named 'employeedata.pilot_predictions', 
-    replacing it if it exists.
-•	Feature Importance: The feature importance is extracted from the random forest model, converted into a dataframe (feature_table), and written back to BigQuery 
-    in a table called 'employeedata.feature_table'.
+3. **Building the Model with PyCaret (RandomForestClassifier)**
+   - **PyCaret Installation**: Installs PyCaret, an automated machine learning library.
+   - **Model Setup**: Prepares `df` for modeling with PyCaret, specifying the target variable (`Quit_the_Company`), session ID, ignored features, and categorical features.
+   - **Model Training**: Compares various models using `compare_models()` and trains a random forest model (`rf`) using `create_model('rf')`.
+   - **Model Prediction**: Makes predictions on both the original data (`df`) and new data (`df2`), storing results in `final_df` and `new_predictions`, respectively.
 
-Outcome
-•	The code successfully connects to BigQuery, retrieves employee data, trains a model to predict whether employees will quit the company, makes predictions on 
-    both existing and new employee data, and stores these predictions and the feature importance analysis back in BigQuery.
-•	The data used includes HR data (tbl_hr_data.csv) for model training and new employee data (tbl_new_employees.csv) for making predictions with the trained model.
+4. **Writing Results Back to BigQuery**
+   - **BigQuery Writeback**: Writes the predictions for new employees (`new_predictions`) back to BigQuery into a table named `employeedata.pilot_predictions`, replacing it if it exists.
+   - **Feature Importance**: Extracts feature importance from the random forest model, converts it into a dataframe (`feature_table`), and writes it back to BigQuery in a table called `employeedata.feature_table`.
 
-This workflow demonstrates a complete data science pipeline from data retrieval, preprocessing, model building and evaluation, to deploying the model's predictions and insights back into a data warehouse (BigQuery) for further analysis or operational use.
+## Outcome
+
+- The code successfully connects to BigQuery, retrieves employee data, trains a model to predict whether employees will quit the company, makes predictions on both existing and new employee data, and stores these predictions and feature importance analysis back in BigQuery.
+- The data used includes:
+  - **HR Data (`tbl_hr_data.csv`)**: Used for model training.
+  - **New Employee Data (`tbl_new_employees.csv`)**: Used for making predictions with the trained model.
+
+## Key Files
+- `tbl_hr_data.csv`: HR data used for training the model.
+- `tbl_new_employees.csv`: New employee data used for prediction.
+
+## Usage
+
+To run this code:
+
+1. Ensure you have access to Google Cloud's BigQuery and the necessary permissions to read and write data.
+2. Run each step of the workflow in a Colab environment to authenticate, retrieve data, train the model, make predictions, and write results back to BigQuery.
+
+## Future Enhancements
+
+- **Automate the Workflow**: Set up a scheduled pipeline to automate data retrieval, model training, and prediction updates.
+- **Enhanced Model Tuning**: Experiment with other models and hyperparameters for potentially better prediction accuracy.
+- **Add More Features**: Incorporate additional employee data for a more robust churn prediction model.
+
+This workflow demonstrates a complete data science pipeline, from data retrieval, preprocessing, model building, and evaluation, to deploying the model's predictions and insights back into a data warehouse (BigQuery) for further analysis or operational use.
+
